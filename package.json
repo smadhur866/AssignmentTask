@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@nestjs/bull": "^11.0.4",
+    "@nestjs/bullmq": "^11.0.4",
+    "@nestjs/swagger": "^11.4.4",
+    "@nestjs/throttler": "^6.5.0",
+    "@prisma/client": "^6.19.3",
+    "bullmq": "^5.77.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "ioredis": "^5.10.1",
+    "nest-winston": "^1.10.2",
+    "opossum": "^9.0.0",
+    "prisma": "^6.19.3",
+    "swagger-ui-express": "^5.0.1",
+    "winston": "^3.19.0"
+  }
+}

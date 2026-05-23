@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCESS
+  FAILED
+}
+
+enum PaymentEventType {
+  CREATED
+  PROCESSING
+  SUCCESS
+  FAILED
+  WEBHOOK_RECEIVED
+  RETRY_SCHEDULED
+}
+
+model Payment {
+  id             String   @id @default(uuid())
+  amount         Float
+  currency       String
+  status         PaymentStatus @default(PENDING)
+
+  idempotencyKey String   @unique
+  retryCount     Int      @default(0)
+
+  externalRef    String?
+  failureReason  String?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  events         PaymentEvent[]
+}
+
+model PaymentEvent {
+  id        String   @id @default(uuid())
+  paymentId String
+  type      PaymentEventType
+  message   String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  payment   Payment  @relation(fields: [paymentId], references: [id])
+
+  @@index([paymentId])
+}
